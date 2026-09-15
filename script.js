@@ -1,0 +1,11 @@
+const overlay=document.getElementById("chatOverlay");
+document.querySelectorAll(".open-chat").forEach(b=>b.addEventListener("click",()=>overlay.classList.add("active")));
+document.getElementById("chatClose")?.addEventListener("click",()=>overlay.classList.remove("active"));
+overlay?.addEventListener("click",e=>{if(e.target===overlay)overlay.classList.remove("active")});
+const form=document.getElementById("bookingForm"),steps=[...document.querySelectorAll(".conversation-step")],messages=document.getElementById("chatMessages"),availability=document.getElementById("availabilityMessage"),success=document.getElementById("successMessage");
+function bubble(t,type="bot"){if(!messages)return;const d=document.createElement("div");d.className=type==="user"?"user-bubble":"bot-bubble";d.textContent=t;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
+document.querySelectorAll(".next-step").forEach(b=>b.addEventListener("click",()=>{const s=b.closest(".conversation-step"),i=s.querySelector("input,select");if(i&&!i.checkValidity()){i.reportValidity();return}bubble(i.value,"user");const n=+s.dataset.step;if(n===1)bubble("Mucho gusto. ¿Cuál es tu número de WhatsApp?");if(n===2)bubble("Gracias. ¿Qué tratamiento deseas consultar?");if(n===3)bubble("Perfecto. Ahora revisemos el día y horario que prefieres.");steps.forEach(x=>x.classList.toggle("active",x.dataset.step===String(n+1)))}));
+form?.addEventListener("submit",async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));bubble(`${data.fecha} · ${data.horario}`,"user");bubble("Estoy consultando la agenda del doctor. Un momento, por favor…");availability.classList.add("show");availability.textContent="Consultando disponibilidad…";
+const N8N_WEBHOOK_URL="https://TU-DOMINIO-N8N/webhook/agenda-dr-elias";
+// En producción: hacer POST a N8N_WEBHOOK_URL y mostrar las opciones devueltas por n8n.
+await new Promise(r=>setTimeout(r,1200));availability.textContent="Disponibilidad consultada. Te contactaremos por WhatsApp para ofrecerte las horas exactas y confirmar tu cita.";bubble("Encontré opciones preliminares. Te escribiré por WhatsApp para confirmar la hora exacta.");form.style.display="none";if(success)success.style.display="block"});
