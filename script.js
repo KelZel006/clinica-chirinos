@@ -298,3 +298,20 @@
 
   pintar();
 })();
+
+// Barra fija del teléfono: aparece solo cuando el botón principal del hero ya no está a la vista
+// ni el de la llamada final, para no mostrar dos botones iguales a la vez.
+(function () {
+  const barra = document.querySelector(".barra-movil");
+  const visibles = new Set();
+  const objetivos = document.querySelectorAll(".hero-accion, .cta-final");
+  if (!barra || !objetivos.length || !("IntersectionObserver" in window)) {
+    barra?.classList.add("visible");
+    return;
+  }
+  const observador = new IntersectionObserver((entradas) => {
+    for (const e of entradas) e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target);
+    barra.classList.toggle("visible", visibles.size === 0);
+  });
+  objetivos.forEach((o) => observador.observe(o));
+})();

@@ -5,5 +5,5 @@
 window.AGENDA_CONFIG = {
   supabaseUrl: "https://oqoinutwttajwxgnnbrp.supabase.co",
   clavePublica: "sb_publishable_VHMQTvfvzAWeyretpz8ZzQ_uPzoKji0",
-  whatsapp: "+504 0000-0000",
+  whatsapp: "+504 9911-5127",
 };
