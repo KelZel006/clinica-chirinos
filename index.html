@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="agenda.css" />
 </head>
 <body>
   <header class="site-header">
@@ -166,21 +167,16 @@
 
   <button class="chat-fab open-chat" aria-label="Abrir agenda por chat">✉</button>
   <div class="chat-overlay" id="chatOverlay">
-    <div class="chat-panel">
-      <button class="chat-close" id="chatClose">×</button>
-      <div class="chat-header"><div class="chat-avatar">EC</div><div><strong>Asistente del Dr. Elías</strong><small>Agenda por chat</small></div></div>
-      <div class="chat-message">Hola, soy el asistente del Dr. Elías Chirinos. ¿Deseas agendar una valoración de implantes?</div>
-      <form id="bookingForm">
-        <label>Nombre completo<input required name="nombre" placeholder="Tu nombre"></label>
-        <label>Teléfono / WhatsApp<input required name="telefono" placeholder="+504 ..."></label>
-        <label>Correo electrónico<input type="email" name="correo" placeholder="correo@ejemplo.com"></label>
-        <label>Motivo de consulta<select name="motivo"><option>Valoración de implantes</option><option>Implante unitario</option><option>Carga inmediata</option><option>Rehabilitación completa</option><option>Otro tratamiento</option></select></label>
-        <label>Fecha preferida<input type="date" name="fecha"></label>
-        <button class="btn btn-dark full" type="submit">Enviar y agendar ↗</button>
-      </form>
-      <div class="success-message" id="successMessage">¡Gracias! Hemos recibido tu solicitud. Nuestro equipo se pondrá en contacto contigo para confirmar tu cita.</div>
+    <div class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="agendaTitulo">
+      <button class="chat-close" id="chatClose" aria-label="Cerrar agenda">×</button>
+      <div class="chat-header">
+        <div class="chat-avatar" aria-hidden="true">EC</div>
+        <div><strong id="agendaTitulo">Agenda tu cita</strong><small>Dr. Elías Chirinos · confirmamos por WhatsApp</small></div>
+      </div>
+      <div id="agendaWeb"></div>
     </div>
   </div>
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

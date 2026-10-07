@@ -1,0 +1,230 @@
+/* Agenda en línea (panel del chat). Colores de la marca: azul marino #0b3157 y crema. */
+
+.chat-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(11 49 87 / 0.45);
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+.chat-overlay.active { display: flex; }
+
+.chat-panel {
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(420px, 100%);
+  max-height: min(720px, calc(100dvh - 40px));
+  overflow: hidden;
+  background: #fffdf9;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgb(11 49 87 / 0.28);
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: #0b3157;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 56px 16px 20px;
+  background: #0b3157;
+  color: #fff;
+}
+.chat-header strong { display: block; font-size: 16px; }
+.chat-header small { display: block; color: #b9cbe0; font-size: 13px; }
+.chat-avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b3157;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+}
+.chat-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.12);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+.chat-close:hover { background: rgb(255 255 255 / 0.22); }
+
+#agendaWeb { overflow-y: auto; }
+
+.agenda-pasos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 14px 20px 0;
+  list-style: none;
+  counter-reset: paso;
+  font-size: 12px;
+  color: #7a8796;
+}
+.agenda-pasos li { counter-increment: paso; padding-top: 6px; border-top: 3px solid #e3e8ee; }
+.agenda-pasos li::before { content: counter(paso) ". "; }
+.agenda-pasos li.actual { border-color: #0b3157; color: #0b3157; font-weight: 600; }
+.agenda-pasos li.hecho { border-color: #6f8fb4; color: #3d5a80; }
+
+.agenda-cuerpo { padding: 16px 20px 22px; }
+.agenda-titulo {
+  margin: 4px 0 12px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.agenda-nota { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: #5b6b7c; }
+.agenda-cargando, .agenda-vacio { margin: 8px 0; font-size: 14px; color: #5b6b7c; }
+.agenda-error {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fcecec;
+  color: #a52222;
+  font-size: 14px;
+}
+
+.agenda-servicios { display: grid; gap: 8px; }
+.agenda-servicio {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dde3ea;
+  border-radius: 12px;
+  background: #fff;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.agenda-servicio:hover { border-color: #0b3157; box-shadow: 0 2px 10px rgb(11 49 87 / 0.1); }
+.agenda-servicio-nombre { font-weight: 600; font-size: 15px; }
+.agenda-servicio-desc { grid-column: 1; font-size: 13px; color: #5b6b7c; line-height: 1.4; }
+.agenda-servicio-dur { grid-column: 2; grid-row: 1; font-size: 12px; color: #5b6b7c; white-space: nowrap; }
+
+.agenda-volver {
+  margin: 0 0 6px -6px;
+  padding: 6px;
+  border: 0;
+  background: none;
+  color: #3d5a80;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.agenda-volver:hover { text-decoration: underline; }
+
+.agenda-dias {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  margin: 0 -2px 6px;
+  scrollbar-width: thin;
+}
+.agenda-dia {
+  display: grid;
+  justify-items: center;
+  flex: 0 0 58px;
+  gap: 1px;
+  padding: 8px 0;
+  border: 1px solid #dde3ea;
+  border-radius: 12px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.agenda-dia strong { font-size: 18px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.agenda-dia:hover { border-color: #0b3157; }
+.agenda-dia.elegido { background: #0b3157; border-color: #0b3157; color: #fff; }
+
+.agenda-horas { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+.agenda-hora {
+  height: 42px;
+  border: 1px solid #dde3ea;
+  border-radius: 10px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.agenda-hora:hover { border-color: #0b3157; }
+.agenda-hora.elegida { background: #0b3157; border-color: #0b3157; color: #fff; font-weight: 600; }
+
+.agenda-siguiente { margin-top: 16px; }
+.btn.full { width: 100%; }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+.agenda-resumen {
+  margin: 4px 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #eef3f9;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.agenda-form { display: grid; gap: 12px; }
+.agenda-form label { display: grid; gap: 5px; font-size: 13px; font-weight: 600; }
+.agenda-form label span { font-weight: 400; color: #5b6b7c; }
+.agenda-form input,
+.agenda-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid #cfd7e0;
+  border-radius: 10px;
+  background: #fff;
+  color: #0b3157;
+  font: inherit;
+  font-size: 16px;
+}
+.agenda-form input:focus,
+.agenda-form textarea:focus { outline: 2px solid #0b3157; outline-offset: 1px; border-color: #0b3157; }
+.agenda-trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.agenda-listo { text-align: center; }
+.agenda-listo p { font-size: 14px; line-height: 1.5; }
+.agenda-check {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin: 6px auto 8px;
+  border-radius: 50%;
+  background: #0b3157;
+  color: #fff;
+  font-size: 26px;
+}
+
+.agenda-cuerpo button:focus-visible,
+.chat-close:focus-visible { outline: 2px solid #c79a3b; outline-offset: 2px; }
+
+@media (max-width: 520px) {
+  .chat-overlay { padding: 0; align-items: stretch; }
+  .chat-panel { width: 100%; max-height: none; border-radius: 0; }
+}
