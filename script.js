@@ -78,7 +78,9 @@
     estado.error = null;
     if (datos.sitio) return; // campo trampa para robots
     if (!String(datos.nombre || "").trim()) return mostrarError("Escribe tu nombre completo.");
-    if (String(datos.telefono || "").replace(/\D/g, "").length < 8) return mostrarError("Escribe tu número de WhatsApp de 8 dígitos.");
+    let digitos = String(datos.telefono || "").replace(/\D/g, "");
+    if (digitos.length === 11 && digitos.startsWith("504")) digitos = digitos.slice(3);
+    if (digitos.length !== 8) return mostrarError("Escribe tu número de WhatsApp de 8 dígitos.");
     estado.enviando = true;
     pintar();
     try {
@@ -226,7 +228,7 @@
       ${resumen()}
       <form class="agenda-form" novalidate>
         <label>Nombre completo<input name="nombre" autocomplete="name" required></label>
-        <label>WhatsApp<input name="telefono" inputmode="tel" autocomplete="tel" placeholder="9999-8888" required></label>
+        <label>WhatsApp<input name="telefono" inputmode="tel" autocomplete="tel" placeholder="9999-8888" maxlength="14" required></label>
         <label>Correo electrónico <span>(opcional)</span><input name="correo" type="email" autocomplete="email"></label>
         <label>¿Algo que el doctor deba saber? <span>(opcional)</span><textarea name="motivo" rows="2" maxlength="500"></textarea></label>
         <label class="agenda-trampa" aria-hidden="true">Sitio web<input name="sitio" tabindex="-1" autocomplete="off"></label>

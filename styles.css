@@ -200,9 +200,19 @@ p { margin: 0; text-wrap: pretty; }
 .problema-grid { display: grid; gap: 22px; }
 .problema-texto { display: grid; gap: 16px; font-size: 1.1rem; }
 .problema-texto strong { color: var(--blanco); }
+.problema-cierre {
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 255 255 / 0.18);
+  color: var(--blanco);
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1.35;
+}
 
 /* Casos */
-.casos h2 { margin-bottom: 28px; }
+.casos-encabezado { max-width: 46rem; margin-bottom: 32px; }
+.casos-intro { margin-top: 14px; color: var(--texto-suave); font-size: 1.1rem; }
 .casos-lista {
   display: grid;
   gap: 14px;
