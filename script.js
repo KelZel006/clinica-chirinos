@@ -173,7 +173,7 @@
           )
           .join("")}
       </div>
-      <p class="agenda-nota">¿Implantes, carga inmediata o rehabilitación completa? Empieza con una <strong>valoración</strong>: el doctor te explica el tratamiento ideal.</p>
+      <p class="agenda-nota">¿No sabes qué elegir? Empieza con una <strong>valoración</strong>: el doctor revisa tu caso y te explica el tratamiento ideal.</p>
       ${error()}`;
   }
 
